@@ -10,7 +10,8 @@
   },
   "main": "./dist/angular-leap.js",
   "dependencies": {
-    "angular": ">1.0.7"
+    "angular": ">1.0.7",
+    "leapjs": "~0.2"
   },
   "devDependencies": {
     "angular-mocks": ">1.0.7"
