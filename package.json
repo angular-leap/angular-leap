@@ -1,20 +1,23 @@
 {
-  "name": "angular-leap",
-  "version": "0.0.1",
-  "description": "A translation module for AngularJS",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:angular-leap/angular-leap.git"
-  },
-  "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.unit.conf.js --browsers Chrome --single-run"
-  },
-  "author": {
-    "name": "Robin Boehm"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "karma": "~0.10.2"
-  }
+    "name"           : "angular-leap",
+    "version"        : "0.0.1",
+    "description"    : "A translation module for AngularJS",
+    "main"           : "index.js",
+    "repository"     : {
+        "type": "git",
+        "url" : "git@github.com:angular-leap/angular-leap.git"
+    },
+    "scripts"        : {
+        "test": "./node_modules/karma/bin/karma start karma.unit.conf.js --browsers Chrome --single-run"
+    },
+    "author"         : {
+        "name": "Robin Boehm"
+    },
+    "license"        : "MIT",
+    "devDependencies": {
+        "karma": "~0.10.2"
+    },
+    "scripts"        : {
+        "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    }
 }
