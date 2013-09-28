@@ -17,6 +17,6 @@ angular.module('angular-leap').service("leapHelperService", [
         };
 
         return {
-            timeout         : timeoutHandler
+            timeout: timeoutHandler
         }
     }]);
