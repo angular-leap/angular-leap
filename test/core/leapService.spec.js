@@ -1,14 +1,14 @@
-ddescribe("A leapService", function () {
+describe("A leapService", function () {
 
     beforeEach(module("angular-leap"));
 
-    it("should throw an exception if global Variant Leap is not defined", inject(function ($injector) {
+    it("should throw an exception if global variant Leap is not defined", inject(function ($injector) {
 
         var invokeLeapService = function () {
             $injector.invoke(function (leap) {
             });
         }
-        expect(invokeLeapService).toThrow();
+        expect(invokeLeapService).toThrow(new Error("You should include LeapJS Native JavaScript API"));
     }));
 
     describe("that could use global Leap Variant", function () {
@@ -17,7 +17,7 @@ ddescribe("A leapService", function () {
         var _Leap;
         var _LeapController;
 
-        beforeEach(function () {
+        beforeEach(inject(function ($window) {
             _LeapController = function(){};
             _LeapController.prototype.connect = function(){};
 
@@ -25,8 +25,8 @@ ddescribe("A leapService", function () {
             _Leap = function () {};
             _Leap.Controller = _LeapController;
 
-            window.Leap = _Leap;
-        });
+            $window.Leap = _Leap;
+        }));
 
 
         it("should offer a controller function", inject(function ($injector) {
