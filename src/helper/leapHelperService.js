@@ -1,5 +1,22 @@
 angular.module('angular-leap').service("leapHelperService", [
     '$timeout', function ($timeout) {
+        var testForDirection = function (gestureEvent, direction) {
+            // TODO: Make Configurable
+            var limit = 0.5;
+
+            var directionHorizontal = gestureEvent.direction[0];
+            var directionVertical = gestureEvent.direction[1];
+
+            var directionDefinition = {
+                left : directionHorizontal > limit,
+                right: -directionHorizontal > limit,
+                up   : directionVertical > limit,
+                down : -directionVertical > limit
+            };
+
+            return directionDefinition[direction];
+        };
+
         // TODO: Make Configurable
         var timeOut = 650;
         var timeoutActive = false;
@@ -17,6 +34,7 @@ angular.module('angular-leap').service("leapHelperService", [
         };
 
         return {
-            timeout: timeoutHandler
+            testForDirection: testForDirection,
+            timeout         : timeoutHandler
         }
     }]);
