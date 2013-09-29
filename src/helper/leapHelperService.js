@@ -3,15 +3,14 @@ angular.module('angular-leap').service("leapHelperService", [
         var testForDirection = function (gestureEvent, direction) {
             // TODO: Make Configurable
             var limit = 0.5;
-
             var directionHorizontal = gestureEvent.direction[0];
             var directionVertical = gestureEvent.direction[1];
 
             var directionDefinition = {
-                left : directionHorizontal > limit,
-                right: -directionHorizontal > limit,
-                up   : directionVertical > limit,
-                down : -directionVertical > limit
+                Left : directionHorizontal > limit,
+                Right: -directionHorizontal > limit,
+                Up   : directionVertical > limit,
+                Down : -directionVertical > limit
             };
 
             return directionDefinition[direction];

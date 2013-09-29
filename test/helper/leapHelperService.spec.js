@@ -7,16 +7,16 @@ describe("A leapHelperService", function () {
 
     describe("testForDirection function", function () {
 
-        var directions = ["left", "right", "up", "down"];
+        var directions = ["Left", "Right", "Up", "Down"];
 
 
         it("should detect direction", inject(function (leapHelperService) {
 
             var testEventsFor = {
-                left : {direction: [1, 0]},
-                right: {direction: [-1, 0]},
-                up   : {direction: [0, 1]},
-                down : {direction: [0, -1]}
+                Left : {direction: [1, 0]},
+                Right: {direction: [-1, 0]},
+                Up   : {direction: [0, 1]},
+                Down : {direction: [0, -1]}
             }
 
             for (var i in directions) {
@@ -38,8 +38,8 @@ describe("A leapHelperService", function () {
                 leftMin: {direction: [0.1, 0]},
                 leftMax: {direction: [1, 0]}
             };
-            expect(leapHelperService.testForDirection(testEventsFor['leftMin'], "left")).toBe(false);
-            expect(leapHelperService.testForDirection(testEventsFor['leftMax'], "left")).toBe(true);
+            expect(leapHelperService.testForDirection(testEventsFor['leftMin'], "Left")).toBe(false);
+            expect(leapHelperService.testForDirection(testEventsFor['leftMax'], "Left")).toBe(true);
 
 
         }));
