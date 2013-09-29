@@ -33,11 +33,29 @@ describe("A swipe gesture directive", function () {
     }));
 
 
-    it("should be executed and register gesture event listener ", inject(function ($rootScope, $compile) {
+    //TODO: Write generic tesFOrDirection func to reduce redundant code
+    it("should be executed and register gesture event listener for left", inject(function ($rootScope, $compile) {
+
+
+        spyOn(_LeapController.prototype,"on");
+        var html = "<div leap-swipe-" + directions[0] + "='test=test+1'></div>";
+        var scope = $rootScope.$new();
+        var element = $compile(html)(scope);
+        spyOn(scope,"$apply");
+        // Simulate Swipe Event, execute function
+        _LeapController.prototype.on.calls[0].args[1]({
+            type: "swipe",
+            direction:[1,0]
+        });
+        expect(scope.$apply).toHaveBeenCalled();
+    }));
+
+
+    it("should be executed and register gesture event listener for right", inject(function ($rootScope, $compile) {
         spyOn(_LeapController.prototype,"on");
 
 
-        var html = "<div leap-swipe-" + directions[0] + "='test=test+1'></div>";
+        var html = "<div leap-swipe-right='test=test+1'></div>";
         var scope = $rootScope.$new();
         var element = $compile(html)(scope);
 
@@ -46,11 +64,53 @@ describe("A swipe gesture directive", function () {
         // Simulate Swipe Event, execute function
         _LeapController.prototype.on.calls[0].args[1]({
             type: "swipe",
-            direction:[1,0]
+            direction:[-1,0]
         });
 
         expect(scope.$apply).toHaveBeenCalled();
     }));
+
+    it("should be executed and register gesture event listener for up", inject(function ($rootScope, $compile) {
+        spyOn(_LeapController.prototype,"on");
+
+
+        var html = "<div leap-swipe-up='test=test+1'></div>";
+        var scope = $rootScope.$new();
+        var element = $compile(html)(scope);
+
+
+        spyOn(scope,"$apply");
+        // Simulate Swipe Event, execute function
+        _LeapController.prototype.on.calls[0].args[1]({
+            type: "swipe",
+            direction:[0,1]
+        });
+
+        expect(scope.$apply).toHaveBeenCalled();
+    }));
+
+
+    it("should be executed and register gesture event listener for down", inject(function ($rootScope, $compile) {
+        spyOn(_LeapController.prototype,"on");
+
+
+        var html = "<div leap-swipe-down='test=test+1'></div>";
+        var scope = $rootScope.$new();
+        var element = $compile(html)(scope);
+
+
+        spyOn(scope,"$apply");
+        // Simulate Swipe Event, execute function
+        _LeapController.prototype.on.calls[0].args[1]({
+            type: "swipe",
+            direction:[0,-1]
+        });
+
+        expect(scope.$apply).toHaveBeenCalled();
+    }));
+
+
+
 
 
     it("should use the timeout function to prevent unwanted double event triggers", inject(function ($rootScope, $compile,$timeout) {
