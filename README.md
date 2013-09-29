@@ -44,6 +44,7 @@ angular.module("angular-leap-example")
 ```
 
 ## TODO
+* Build Process
 * Documentation
 * Examples
 * Offer other events for easy usage
