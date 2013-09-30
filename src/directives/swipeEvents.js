@@ -7,7 +7,7 @@ angular.forEach(['Left', 'Right', 'Up', 'Down'],
             return function (scope, element, attr) {
                 var fn = $parse(attr[directiveName]);
                 leap.controller().on('gesture', function (gesture) {
-                    if (!leapHelperService.timeout(leapConfig.defaultTimeOut) &&
+                    if (!leapHelperService.timeout(leapConfig.defaultTimeout) &&
                         gesture.type === "swipe" &&
                         leapHelperService.testForDirection(gesture, direction)) {
                         scope.$apply(function () {
