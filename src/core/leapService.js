@@ -1,5 +1,5 @@
+'use strict';
 angular.module("angular-leap").service('leap', function ($window) {
-    'use strict';
     if (!$window.Leap) {
         throw new Error("You should include LeapJS Native JavaScript API");
     }
