@@ -1,4 +1,4 @@
-angular.module('angular-leap').service("leapHelperService", [
+angular.module('angular-leap').factory("leapHelperService", [
     '$timeout', function ($timeout) {
         'use strict';
         // TODO: Make Configurable
