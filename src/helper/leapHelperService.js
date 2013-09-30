@@ -3,7 +3,6 @@ angular.module('angular-leap').factory("leapHelperService", [
         'use strict';
         // TODO: Make Configurable
         var limit = 0.5,
-            timeOut = 650,
             timeoutActive = false,
 
             testForDirection = function (gestureEvent, direction) {
@@ -26,7 +25,7 @@ angular.module('angular-leap').factory("leapHelperService", [
                     timeoutActive = true;
                     $timeout(function () {
                         timeoutActive = false;
-                    }, timeOut);
+                    }, ms);
                 }
                 return beforeState;
             };
