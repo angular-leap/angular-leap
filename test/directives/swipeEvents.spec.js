@@ -208,7 +208,7 @@ describe("A swipe gesture directive", function () {
             direction: [1, 0]
         });
 
-        expect($browser.defer.calls[0].args[1]).toBe(1000);
+        expect($browser.defer.calls[0].args[1]).toBe('1000');
     }));
 
 
