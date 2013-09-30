@@ -1,6 +1,10 @@
 describe("A leapConfig Value", function () {
     beforeEach(module('angular-leap'));
 
+    it("should be Defined", inject(function (leapConfig) {
+        expect(leapConfig).toBeDefined();
+    }));
+
     it("should contain a defaultTimeout value", inject(function (leapConfig) {
         expect(leapConfig.defaultTimeout).toBeDefined();
     }));
