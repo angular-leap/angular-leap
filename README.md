@@ -45,6 +45,7 @@ angular.module("angular-leap-example")
 
 ## TODO
 * Build Process
+* Reduce Redundant Code
 * Documentation
 * Examples
 * Offer other events for easy usage
