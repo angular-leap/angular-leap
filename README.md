@@ -19,6 +19,8 @@ Feel free to contribute or create feature requests ;)
 	<div leap-swipe-up="a=a+10">Swipe Up => +10</div>
 	<div leap-swipe-down="a=a-10">Swipe Down => -10</div>
 	
+	<div leap-circle="addByCircleSze($gesture)">Swipe Down => +%CicleSize%</div>
+	
 	<div leap-screentap="sqrt($gesture)">ScreenTap => sqrt</div>
 	<div leap-keytap="pow2($gesture)">Swipe Down => power^%Hands%</div>
 </div>
@@ -37,6 +39,10 @@ angular.module("angular-leap-example")
         $scope.pow2 = function($gesture){
         	$scope.a = Math.pow($scope.a,$gesture.handIds.length+1);
         };
+        
+        $scope.addByCircleSze = function($gesture){
+        //https://developer.leapmotion.com/documentation/Languages/JavaScript/API/Leap.CircleGesture.html
+        }
 
     })
 ;
