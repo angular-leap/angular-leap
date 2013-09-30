@@ -184,5 +184,35 @@ describe("A swipe gesture directive", function () {
 
 
 
+    it("should use defaultTimeout of not configured via attribute", inject(function ($rootScope, $compile, $browser, leapConfig) {
+        spyOn($browser, "defer");
+        spyOn(_LeapController.prototype, "on");
+        var scope = $rootScope.$new();
+        var html = "<div leap-swipe-" + directions[0] + "='testFunction()'></div>";
+        var element = $compile(html)(scope);
+
+        _LeapController.prototype.on.calls[0].args[1]({
+            type     : "swipe",
+            direction: [1, 0]
+        });
+
+        expect($browser.defer.calls[0].args[1]).toBe(leapConfig.defaultTimeout);
+    }));
+
+    it("should use timeout if it configured", inject(function ($rootScope, $compile, $browser) {
+        spyOn($browser, "defer");
+        spyOn(_LeapController.prototype, "on");
+        var scope = $rootScope.$new();
+        var html = "<div leap-swipe-" + directions[0] + "='testFunction()' leap-timeout='1000'></div>";
+        var element = $compile(html)(scope);
+
+        _LeapController.prototype.on.calls[0].args[1]({
+            type     : "swipe",
+            direction: [1, 0]
+        });
+
+        expect($browser.defer.calls[0].args[1]).toBe(1000);
+    }));
+
 
 });
