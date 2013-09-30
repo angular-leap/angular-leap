@@ -51,7 +51,7 @@ describe("A leapHelperService", function () {
 
     describe("timeout function", function () {
 
-        it("should return false if no timeout is active", inject(function (leapHelperService, $timeout) {
+        it("should return false if no timeout is active", inject(function (leapHelperService) {
             expect(leapHelperService.timeout()).toBe(false);
         }));
 
