@@ -67,6 +67,15 @@ describe("A leapHelperService", function () {
             expect(leapHelperService.timeout(100)).toBe(true);
             expect(leapHelperService.timeout()).toBe(true);
         }));
+
+        it("should create an timeout with configured time", inject(function ($browser, leapHelperService) {
+            spyOn($browser, 'defer');
+            var testTime = 1234;
+            leapHelperService.timeout(testTime);
+            expect($browser.defer.calls[0].args[1]).toBe(testTime);
+        }))
+
+        //$browser.defer
     })
 
 
