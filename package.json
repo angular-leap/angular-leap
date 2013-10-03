@@ -1,7 +1,7 @@
 {
     "name"           : "angular-leap",
     "version"        : "0.0.1",
-    "description"    : "A translation module for AngularJS",
+    "description"    : "Easy Usage of LeapMotion with AngularJS",
     "main"           : "index.js",
     "repository"     : {
         "type": "git",
