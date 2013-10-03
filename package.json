@@ -11,7 +11,7 @@
         "test": "./node_modules/karma/bin/karma start karma.unit.conf.js --browsers Chrome --single-run"
     },
     "author"         : {
-        "name": "Robin Boehm"
+        "name": "Robin Böhm"
     },
     "license"        : "MIT",
     "devDependencies": {
