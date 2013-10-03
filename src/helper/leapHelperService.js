@@ -26,10 +26,15 @@ angular.module('angular-leap').factory("leapHelperService", function ($timeout, 
                 }, ms);
             }
             return beforeState;
+        },
+
+        splitByCamelCase = function (inputString) {
+            return inputString.replace(/([A-Z])/g, ' $1').split(' ');
         };
 
     return {
         testForDirection: testForDirection,
-        timeout         : timeoutHandler
+        timeout         : timeoutHandler,
+        splitByCamelCase: splitByCamelCase
     };
 });
