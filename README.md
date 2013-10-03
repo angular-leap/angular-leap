@@ -24,11 +24,9 @@ Feel free to contribute or create feature requests ;)
 	<div leap-screentap="sqrt($gesture)">ScreenTap => sqrt</div>
 	<div leap-keytap="pow2($gesture)">Swipe Down => power^%Hands%</div>
 </div>
-
 ```
 
 ```js
-
 angular.module("angular-leap-example")
     .controller("ExampleCtrl", function ($scope, leap) {
 		$scope.a = 1;
@@ -44,9 +42,7 @@ angular.module("angular-leap-example")
         //https://developer.leapmotion.com/documentation/Languages/JavaScript/API/Leap.CircleGesture.html
         }
 
-    })
-;
-
+    });
 ```
 
 ## TODO
