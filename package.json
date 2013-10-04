@@ -7,9 +7,6 @@
         "type": "git",
         "url" : "git@github.com:angular-leap/angular-leap.git"
     },
-    "scripts"        : {
-        "test": "./node_modules/karma/bin/karma start karma.unit.conf.js --browsers Chrome --single-run"
-    },
     "author"         : {
         "name": "Robin Böhm"
     },
