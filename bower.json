@@ -1,5 +1,5 @@
 {
-  "author": "Robin Boehm",
+  "author": "Robin Böhm",
   "name": "angular-leap",
   "description": "A set of diectives and services for easy usage of the leapjs API for leapmotion devices inside of AngularJS",
   "version": "0.0.1",
