@@ -6,7 +6,7 @@ angular.module("angular-leap").service('leap', function ($window) {
 
     var controller, getController = function () {
         if (!controller) {
-            controller = new $window.Leap.Controller();
+            controller = new $window.Leap.Controller({enableGestures: true});
             controller.connect();
         }
         return controller;
