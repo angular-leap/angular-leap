@@ -11,10 +11,11 @@
   "main": "./build/angular-leap.js",
   "ignore": [
       ".jshintrc",
+      ".gitignore",
       "/*.js*",
       "/*.yml",
-      "test/*",
-      "src/*"
+      "test",
+      "src"
   ],
   "dependencies": {
     "angular": ">1.0.7",
