@@ -9,6 +9,13 @@
     "url": "git@github.com:angular-leap/angular-leap.git"
   },
   "main": "./build/angular-leap.js",
+  "ignore": [
+      ".jshintrc",
+      "/*.js*",
+      "/*.yml",
+      "test/*",
+      "src/*"
+  ],
   "dependencies": {
     "angular": ">1.0.7",
     "leapjs": "~0.2"
