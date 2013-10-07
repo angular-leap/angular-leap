@@ -38,15 +38,14 @@ angular.module("angular-leap-example")
         	$scope.a = Math.pow($scope.a,$gesture.handIds.length+1);
         };
         
-        $scope.addByCircleSze = function($gesture){
-        //https://developer.leapmotion.com/documentation/Languages/JavaScript/API/Leap.CircleGesture.html
+        $scope.addByCircleSize = function($gesture){
+            $scope.a = $scope.a + $gesture.radius;
         }
 
     });
 ```
 
 ## TODO
-* Build Process
 * Reduce Redundant Code
 * Documentation
 * Examples
