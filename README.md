@@ -9,6 +9,10 @@ Easy to use.
 Just in development.
 Feel free to contribute or create feature requests ;)
 
+## Bower
+
+bower install angular-leap
+
 ## GestureEvent Directives
 
 ```html
