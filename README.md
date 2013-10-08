@@ -1,6 +1,6 @@
 angular-leap
 ============
-[![Build Status](https://travis-ci.org/angular-leap/angular-leap.png)](https://travis-ci.org/angular-leap/angular-leap)
+[![Build Status](https://travis-ci.org/robinboehm/angular-leap.png)](https://travis-ci.org/robinboehm/angular-leap)
 
 # Angular + LeapMotion
 Use your LeapMotion device in your AngularJS Application. 
