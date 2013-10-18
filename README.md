@@ -49,6 +49,10 @@ angular.module("angular-leap-example")
     });
 ```
 
+## Release History
+* 0.0.1 - Add simple gesture directives (swipe-*, circle, *-tap)
+
+
 ## TODO
 * Reduce Redundant Code
 * Documentation
