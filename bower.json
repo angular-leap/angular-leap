@@ -2,7 +2,7 @@
   "author": "Robin Böhm",
   "name": "angular-leap",
   "description": "A set of directives and services for easy usage of the leapjs API for leapmotion devices inside of AngularJS",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/angular-leap/angular-leap",
   "repository": {
     "type": "git",
