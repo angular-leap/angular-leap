@@ -1,2 +1,2 @@
 'use strict';
-angular.module("angular-leap", []);
+angular.module('angular-leap', []);
