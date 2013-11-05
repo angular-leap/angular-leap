@@ -13,6 +13,15 @@ module.exports = function (grunt) {
 
     buildConfig: buildConfig,
 
+    watch: {
+
+      scripts: {
+        files: ['Gruntfile.js', '<%=buildConfig.src %>/**/*.js'],
+        tasks: ['jshint:all', 'karma:unit']
+      }
+
+    },
+
     clean: {
       dist: {
         files: [
@@ -59,6 +68,13 @@ module.exports = function (grunt) {
             '<%= buildConfig.dist %>/<%= buildConfig.name %>.js'
           ]
         }
+      }
+    },
+
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
       }
     }
   });
