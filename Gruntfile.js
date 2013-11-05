@@ -13,6 +13,15 @@ module.exports = function (grunt) {
 
     buildConfig: buildConfig,
 
+    watch: {
+
+      scripts: {
+        files: ['Gruntfile.js', '<%=buildConfig.src %>/**/*.js'],
+        tasks: ['jshint:all']
+      }
+
+    },
+
     clean: {
       dist: {
         files: [
