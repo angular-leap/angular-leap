@@ -1,27 +1,28 @@
 {
-    "name"           : "angular-leap",
-    "version"        : "0.0.1",
-    "description"    : "Easy Usage of LeapMotion with AngularJS",
-    "main"           : "index.js",
-    "repository"     : {
-        "type": "git",
-        "url" : "git@github.com:angular-leap/angular-leap.git"
-    },
-    "author"         : {
-        "name": "Robin Böhm"
-    },
-    "license"        : "MIT",
-    "devDependencies": {
-        "karma"               : "~0.10.2",
-        "grunt"               : "~0.4.1",
-        "grunt-contrib-clean" : "0.4.1",
-        "grunt-contrib-concat": "~0.1.3",
-        "grunt-ngmin"         : "~0.0.2",
-        "grunt-contrib-uglify": "0.1.1",
-        "matchdep": "~0.1.1"
-    },
-    "scripts"        : {
-        "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
-    }
+  "name": "angular-leap",
+  "version": "0.0.1",
+  "description": "Easy Usage of LeapMotion with AngularJS",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:angular-leap/angular-leap.git"
+  },
+  "author": {
+    "name": "Robin Böhm"
+   },
+  "license": "MIT",
+  "devDependencies": {
+    "karma": "~0.10.2",
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "0.4.1",
+    "grunt-contrib-concat": "~0.1.3",
+    "grunt-ngmin": "~0.0.2",
+    "grunt-contrib-uglify": "0.1.1",
+    "grunt-contrib-jshint": "~0.4.x",
+    "matchdep": "~0.1.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+  }
 }
 
