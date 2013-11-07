@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angular-leap')
+angular.module('angularLeap')
 
 .factory('leapHelperService', function ($timeout, leapConfig) {
   var timeoutActive = false;

@@ -1,6 +1,6 @@
 describe("A Circle gesture directive", function () {
 
-    beforeEach(module("angular-leap"));
+    beforeEach(module("angularLeap"));
 
     var eventType = ["circle"];
 

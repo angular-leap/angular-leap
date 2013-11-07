@@ -1,5 +1,5 @@
 describe("A leapHelperService", function () {
-    beforeEach(module('angular-leap'));
+    beforeEach(module('angularLeap'));
 
     it("should offer a testForDirection function", inject(function (leapHelperService) {
         expect(leapHelperService.testForDirection).toBeDefined();
