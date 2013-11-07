@@ -71,6 +71,12 @@ module.exports = function (grunt) {
       }
     },
 
+    changelog: {
+      options: {
+        dest: 'CHANGELOG.md'
+      }
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js',
