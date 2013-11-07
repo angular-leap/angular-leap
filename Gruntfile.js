@@ -1,25 +1,25 @@
 'use strict';
 
 module.exports = function (grunt) {
+  /**
+  * Load required Grunt tasks. These are installed based on the versions listed
+  * in `package.json` when you do `npm install --save-dev` in this project.
+  */
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-  var buildConfig = {
-    src : 'src/',
-    dist: 'build',
-    name: 'angular-leap'
-  };
 
   grunt.initConfig({
 
-    buildConfig: buildConfig,
+    buildConfig: {
+      src : 'src/',
+      dist: 'build',
+      name: 'angular-leap'
+    },
 
     watch: {
-
       scripts: {
         files: ['Gruntfile.js', '<%=buildConfig.src %>/**/*.js'],
         tasks: ['jshint:all', 'karma:unit']
       }
-
     },
 
     clean: {
@@ -81,6 +81,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'jshint:all',
+    'karma:unit',
     'concat',
     'ngmin',
     'uglify'
