@@ -63,6 +63,7 @@ angular.module("angular-leap-example")
 * Documentation
 * Offer other events for easy usage
 
-## Author
-Robin Böhm (@roobijn)
+## Contributors
+* Robin Böhm (@roobijn)
+* Pascal Precht (@PascalPrecht)
 
