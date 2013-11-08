@@ -22,7 +22,8 @@
     "grunt-contrib-uglify": "0.1.1",
     "grunt-contrib-jshint": "~0.4.x",
     "matchdep": "~0.1.1",
-    "grunt-karma": "~0.6.2"
+    "grunt-karma": "~0.6.2",
+    "grunt-conventional-changelog": "~1.0.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
