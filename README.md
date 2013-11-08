@@ -52,11 +52,15 @@ angular.module("angular-leap-example")
 ## Release History
 * 0.0.1 - Add simple gesture directives (swipe-*, circle, *-tap)
 
+## Deployed Example
+[angular-leap-instant.herokuapp.com](https://angular-leap-instant.herokuapp.com/)
+
+## Example Video
+[Screencast Demo](http://www.youtube.com/watch?v=RrszTInvJA4&feature=youtu.be)
 
 ## TODO
 * Reduce Redundant Code
 * Documentation
-* Examples
 * Offer other events for easy usage
 
 ## Author
