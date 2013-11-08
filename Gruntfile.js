@@ -76,6 +76,19 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    ngdocs: {
+      options: {
+        dest: 'site',
+        html5Mode: false,
+        title: 'angular-leap',
+        startpage: '/api',
+      },
+      api: {
+        src: ['src/**/*.js', 'docs/content/api/*.ngdoc'],
+        title: 'API Reference'
+      }
     }
   });
 
