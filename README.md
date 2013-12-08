@@ -67,3 +67,7 @@ angular.module("angular-leap-example")
 * Robin Böhm (@roobijn)
 * Pascal Precht (@PascalPrecht)
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/angular-leap/angular-leap/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
