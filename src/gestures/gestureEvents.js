@@ -6,7 +6,9 @@ angular.forEach([
   'leapSwipeLeft',
   'leapSwipeRight',
   'leapSwipeUp',
-  'leapSwipeDown'
+  'leapSwipeDown',
+  'leapSwipeForward',
+  'leapSwipeBackward'
 ], function (directiveName) {
     var splitByCamelCase = directiveName.replace(/([A-Z])/g, ' $1').split(' '),
         eventType = splitByCamelCase[1].toLowerCase(),
