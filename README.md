@@ -22,6 +22,8 @@ bower install angular-leap
 	<div leap-swipe-right="a=a+1">Swipe Left => +1</div>
 	<div leap-swipe-up="a=a+10">Swipe Up => +10</div>
 	<div leap-swipe-down="a=a-10">Swipe Down => -10</div>
+	<div leap-swipe-forward="a=a*a">Swipe Forward => a^2</div>
+	<div leap-swipe-backward="a=a/2">Swipe Backward => a/2</div>
 	
 	<div leap-circle="addByCircleSze($gesture)">Swipe Down => +%CicleSize%</div>
 	
