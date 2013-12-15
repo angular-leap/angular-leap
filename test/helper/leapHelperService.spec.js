@@ -1,49 +1,55 @@
 describe("A leapHelperService", function () {
     beforeEach(module('angular-leap'));
 
-    it("should offer a testForDirection function", inject(function (leapHelperService) {
-        expect(leapHelperService.testForDirection).toBeDefined();
-    }));
+    var directions = ["left", "right", "up", "down", "forward", "backward"],
+        i,
+        currentTestDirection,
+        defaultEvent = {startPosition: [0, 0, 0], type: 'swipe'},
+        testEventsFor = {
+            left: [-1, 0, 0],
+            right: [1, 0, 0],
+            up: [0, 1, 0],
+            down: [0, -1, 0],
+            forward: [0, 0, 1],
+            backward: [0, 0, -1]
+        };
+
 
     describe("testForDirection function", function () {
 
-        var directions = ["Left", "Right", "Up", "Down"];
-
-
-        it("should detect direction", inject(function (leapHelperService) {
-
-            var testEventsFor = {
-                Left : {direction: [1, 0]},
-                Right: {direction: [-1, 0]},
-                Up   : {direction: [0, 1]},
-                Down : {direction: [0, -1]}
-            }
-
-            for (var i in directions) {
-                var currentTestDirection = directions[i];
-                expect(currentTestDirection).toBeDefined();
-
-                // Test current = true, else false
-                for (var event in testEventsFor) {
-                    expect(leapHelperService.testForDirection(testEventsFor[event], currentTestDirection)).toBe(currentTestDirection == event);
-                }
-            }
-
+        it("should be defined", inject(function (leapHelperService) {
+            expect(leapHelperService.testForDirection).toBeDefined();
         }));
 
+        describe("direction check", function () {
+            for (i in directions) {
+                currentTestDirection = directions[i];
+                expect(currentTestDirection).toBeDefined();
+                for (var event in testEventsFor) {
+                    it("should trigger if " + currentTestDirection + "===" + event, inject(function (leapHelperService) {
+                            // Test current = true, else false
+                            defaultEvent.position = testEventsFor[event];
+                            expect(leapHelperService.testForDirection(defaultEvent, currentTestDirection)).toBe(currentTestDirection === event);
+                        }
+                    ))
+                    ;
+                }
+            }
+            ;
+        });
 
         it("should use a minimum limit for detection", inject(function (leapHelperService) {
 
-            var testEventsFor = {
-                leftMin: {direction: [0.1, 0]},
-                leftMax: {direction: [1, 0]}
-            };
-            expect(leapHelperService.testForDirection(testEventsFor['leftMin'], "Left")).toBe(false);
-            expect(leapHelperService.testForDirection(testEventsFor['leftMax'], "Left")).toBe(true);
+            defaultEvent.position = [0.1,0,0];
+            expect(leapHelperService.testForDirection(defaultEvent, "left")).toBe(false);
+            defaultEvent.position = [-1,0,0];
+            expect(leapHelperService.testForDirection(defaultEvent, "left")).toBe(true);
 
 
         }));
+
     });
+
 
     it("should offer a timeout function", inject(function (leapHelperService) {
         expect(leapHelperService.timeout).toBeDefined();
@@ -80,3 +86,4 @@ describe("A leapHelperService", function () {
 
 
 });
+;

@@ -2,38 +2,64 @@
 
 angular.module('angular-leap')
 
-.factory('leapHelperService', function ($timeout, leapConfig) {
-  var timeoutActive = false;
+    .factory('leapHelperService', function ($timeout, leapConfig) {
+        var timeoutActive = false,
+            limit = leapConfig.defaultGestureIntense;
 
-  var testForDirection = function (gestureEvent, direction) {
+        var getMovements = function (gesture) {
+            var xdiff = gesture.startPosition[0] - gesture.position[0],
+                ydiff = gesture.startPosition[1] - gesture.position[1],
+                zdiff = gesture.startPosition[2] - gesture.position[2];
 
-    var directionHorizontal = gestureEvent.direction[0],
-        directionVertical = gestureEvent.direction[1],
-        limit = leapConfig.defaultGestureIntense;
+            var movement = {
+                x: {
+                    distance: Math.abs(xdiff),
+                    type: (xdiff > 0) ? 'left' : 'right',
+                    direction: xdiff
+                },
+                y: {
+                    distance: Math.abs(ydiff),
+                    type: (ydiff > 0) ? 'down' : 'up',
+                    direction: ydiff
+                },
+                z: {
+                    distance: Math.abs(zdiff),
+                    type: (zdiff > 0) ? 'forward' : 'backward',
+                    direction: zdiff
+                }
+            };
 
-    var directionDefinition = {
-      Left: directionHorizontal > limit,
-      Right: -directionHorizontal > limit,
-      Up: directionVertical > limit,
-      Down: -directionVertical > limit
-    };
+            movement.swipe = {
+                left: (xdiff > 0) && movement.x.distance > limit,
+                right: (xdiff < 0) && movement.x.distance > limit,
+                up: (ydiff < 0) && movement.y.distance > limit,
+                down: (ydiff > 0) && movement.y.distance > limit,
+                forward: (zdiff < 0) && movement.z.distance > limit,
+                backward: (zdiff > 0) && movement.z.distance > limit
+            }
 
-    return directionDefinition[direction];
-  };
+            return movement;
+        }
 
-  var timeoutHandler = function (ms) {
-    var beforeState = timeoutActive;
-    if (!timeoutActive && ms) {
-      timeoutActive = true;
-      $timeout(function () {
-        timeoutActive = false;
-      }, ms);
-    }
-    return beforeState;
-  };
+        var testForDirection = function (gestureEvent, direction) {
+            var movements = getMovements(gestureEvent);
+            return movements.swipe[direction.toLowerCase()];
+        };
 
-  return {
-    testForDirection: testForDirection,
-    timeout: timeoutHandler
-  };
-});
+        var timeoutHandler = function (ms) {
+            var beforeState = timeoutActive;
+            if (!timeoutActive && ms) {
+                timeoutActive = true;
+                $timeout(function () {
+                    timeoutActive = false;
+                }, ms);
+            }
+            return beforeState;
+        };
+
+        return {
+            testForDirection: testForDirection,
+            timeout: timeoutHandler
+        };
+    })
+;
