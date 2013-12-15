@@ -1,6 +1,6 @@
 describe("A leapService", function () {
 
-    beforeEach(module("angular-leap"));
+    beforeEach(module("angularLeap"));
 
     it("should throw an exception if global variant Leap is not defined", inject(function ($injector) {
 

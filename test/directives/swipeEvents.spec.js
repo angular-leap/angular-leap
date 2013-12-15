@@ -1,6 +1,6 @@
 describe("A swipe gesture directive", function () {
 
-    beforeEach(module("angular-leap"));
+    beforeEach(module("angularLeap"));
 
     var directions = ["left", "right", "up", "down"];
 
