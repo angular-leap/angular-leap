@@ -1,5 +1,5 @@
 describe("A leapConfig Value", function () {
-    beforeEach(module('angular-leap'));
+    beforeEach(module('angularLeap'));
 
     it("should be Defined", inject(function (leapConfig) {
         expect(leapConfig).toBeDefined();

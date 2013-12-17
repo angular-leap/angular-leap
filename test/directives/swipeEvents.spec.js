@@ -17,7 +17,7 @@ describe("A swipe gesture directive", function () {
         $rootScope,
         $compile;
 
-    beforeEach(module("angular-leap"));
+    beforeEach(module("angularLeap"));
 
     // Add Leap Mock to globals
     beforeEach(inject(function ($window) {

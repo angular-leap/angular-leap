@@ -1,5 +1,5 @@
 describe("A leapHelperService", function () {
-    beforeEach(module('angular-leap'));
+    beforeEach(module('angularLeap'));
 
     var directions = ["left", "right", "up", "down", "forward", "backward"],
         i,
@@ -86,4 +86,3 @@ describe("A leapHelperService", function () {
 
 
 });
-;

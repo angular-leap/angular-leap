@@ -1,6 +1,6 @@
 describe("A Tap gesture directive", function () {
 
-    beforeEach(module("angular-leap"));
+    beforeEach(module("angularLeap"));
 
     var tapType = ["key", "screen"];
 
