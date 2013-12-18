@@ -103,31 +103,44 @@ describe('A leapService', function () {
                 $window.Leap = _Leap;
             }));
 
-            for (var key in testBasicConfiguration) {
-                if (testBasicConfiguration.hasOwnProperty(key)) {
-                    var value = testBasicConfiguration[key];
+            describe('key: timeout', function () {
+                it('should define a timeout function', inject(function (leap) {
+                    expect(leap.timeout).toBeDefined();
+                }));
 
-                    describe('key: ' + key, function () {
-                        it('should define a default ' + key + ' function', inject(function (leap) {
-                            expect(leap[key]).toBeDefined();
-                        }));
+                it('should define a default timeout at ' + testBasicConfiguration.timeout, inject(function (leap) {
+                    expect(leap.timeout()).toBe(testBasicConfiguration.timeout);
+                }));
 
-                        it('should define a default ' + key + ' at ' + value, inject(function (leap) {
-                            expect(leap[key]()).toBe(value);
-                        }));
+                it('should define a getter/setter', inject(function (leap) {
+                    var tempValue = leap.timeout();
+                    expect(leap.timeout()).toBe(tempValue);
+                    expect(leap.timeout(tempValue + 100)).not.toBe(tempValue);
+                    expect(leap.timeout(tempValue + 100)).toBe(tempValue + 100);
+                    expect(leap.timeout()).toBe(tempValue + 100);
+                }));
 
-                        it('should define a getter/setter', inject(function (leap) {
-                            var tempValue = leap[key]();
-                            expect(leap[key]()).toBe(tempValue);
-                            expect(leap[key](tempValue + 100)).not.toBe(tempValue);
-                            expect(leap[key](tempValue + 100)).toBe(tempValue + 100);
-                            expect(leap[key]()).toBe(tempValue + 100);
-                        }));
+            });
 
-                    });
 
-                }
-            }
+            describe('key: gestureIntense', function () {
+                it('should define a gestureIntense function', inject(function (leap) {
+                    expect(leap.gestureIntense).toBeDefined();
+                }));
+
+                it('should define a default gestureIntense at ' + testBasicConfiguration.gestureIntense, inject(function (leap) {
+                    expect(leap.gestureIntense()).toBe(testBasicConfiguration.gestureIntense);
+                }));
+
+                it('should define a getter/setter', inject(function (leap) {
+                    var tempValue = leap.gestureIntense();
+                    expect(leap.gestureIntense()).toBe(tempValue);
+                    expect(leap.gestureIntense(tempValue + 100)).not.toBe(tempValue);
+                    expect(leap.gestureIntense(tempValue + 100)).toBe(tempValue + 100);
+                    expect(leap.gestureIntense()).toBe(tempValue + 100);
+                }));
+
+            });
 
 
         });
@@ -136,29 +149,33 @@ describe('A leapService', function () {
 
     describe('configured instance', function () {
         beforeEach(module('angularLeap', function (leapProvider) {
-            for (var key in testBasicConfiguration) {
-                if (testBasicConfiguration.hasOwnProperty(key)) {
-                    var value = testBasicConfiguration[key];
-                    leapProvider[key](value + 1);
-                }
-            }
+            leapProvider.timeout(testBasicConfiguration.timeout + 1);
         }));
+        describe('key: timeout', function () {
+            it('should define a default timeout function', inject(function (leap) {
+                expect(leap.timeout).toBeDefined();
+            }));
 
-        for (var key in testBasicConfiguration) {
-            if (testBasicConfiguration.hasOwnProperty(key)) {
-                var value = testBasicConfiguration[key];
-                describe('key: ' + key, function () {
-                    it('should define a default timeout function', inject(function (leap) {
-                        expect(leap[key]).toBeDefined();
-                    }));
+            it('should define a default timeout at ' + testBasicConfiguration.timeout + '+ 1', inject(function (leap) {
+                expect(leap.timeout()).toBe(testBasicConfiguration.timeout + 1);
+            }));
+        });
+    });
 
-                    it('should define a default timeout at ' + value + '+ 1', inject(function (leap) {
-                        expect(leap[key]()).toBe(value + 1);
-                    }));
-                });
 
-            }
-        }
+    describe('configured instance', function () {
+        beforeEach(module('angularLeap', function (leapProvider) {
+            leapProvider.gestureIntense(testBasicConfiguration.gestureIntense + 1);
+        }));
+        describe('key: timeout', function () {
+            it('should define a default gestureIntense function', inject(function (leap) {
+                expect(leap.gestureIntense).toBeDefined();
+            }));
+
+            it('should define a default gestureIntense at ' + testBasicConfiguration.gestureIntense + '+ 1', inject(function (leap) {
+                expect(leap.gestureIntense()).toBe(testBasicConfiguration.gestureIntense + 1);
+            }));
+        });
     });
 
 
