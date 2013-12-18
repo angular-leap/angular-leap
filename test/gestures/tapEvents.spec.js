@@ -131,7 +131,7 @@ describe("A Tap gesture directive", function () {
 
 
 
-    it("should use defaultTimeout of not configured via attribute", inject(function ($rootScope, $compile, $browser, leapConfig) {
+    it("should use defaultTimeout of not configured via attribute", inject(function ($rootScope, $compile, $browser, leap) {
         spyOn($browser, "defer");
         spyOn(_LeapController.prototype, "on");
         var scope = $rootScope.$new();
@@ -142,7 +142,7 @@ describe("A Tap gesture directive", function () {
             type     : tapType[0] + "Tap"
         });
 
-        expect($browser.defer.calls[0].args[1]).toBe(leapConfig.defaultTimeout);
+        expect($browser.defer.calls[0].args[1]).toBe(leap.timeout());
     }));
 
     it("should use timeout if it configured", inject(function ($rootScope, $compile, $browser) {
