@@ -3,24 +3,24 @@
 angular.module('angularLeap')
     .provider('leap', function () {
 
-        var timeOutFn,
-            gestureIntenseFn,
-            // Defaults
-            _timeout = 650,
-            _gestureIntense = 0.5;
+        var _timeOutFn,
+            _gestureIntenseFn,
+        // Defaults
+            timeout = 650,
+            gestureIntense = 0.5;
 
-        this.timeout = timeOutFn = function (timeout) {
-            if (timeout) {
-                _timeout = timeout;
+        this.timeout = _timeOutFn = function (timeoutArgument) {
+            if (timeoutArgument) {
+                timeout = timeoutArgument;
             }
-            return _timeout;
+            return timeout;
         };
 
-        this.gestureIntense = gestureIntenseFn = function (gestureIntense) {
-            if (gestureIntense) {
-                _gestureIntense = gestureIntense;
+        this.gestureIntense = _gestureIntenseFn = function (gestureIntenseArgument) {
+            if (gestureIntenseArgument) {
+                gestureIntense = gestureIntenseArgument;
             }
-            return _gestureIntense;
+            return gestureIntense;
         };
 
 
@@ -41,8 +41,8 @@ angular.module('angularLeap')
 
             return {
                 controller: getController,
-                timeout: timeOutFn,
-                gestureIntense: gestureIntenseFn
+                timeout: _timeOutFn,
+                gestureIntense: _gestureIntenseFn
             };
         };
 
