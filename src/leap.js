@@ -5,8 +5,8 @@ angular.module('angularLeap')
 
         var _timeOutFn,
             _gestureIntenseFn,
-        // Defaults
-            timeout = 650,
+            // Defaults
+           timeout = 650,
             gestureIntense = 0.5;
 
         this.timeout = _timeOutFn = function (timeoutArgument) {
