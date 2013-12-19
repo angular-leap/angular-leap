@@ -1,6 +1,5 @@
 {
     "node": true,
-    "es5": false,
     "esnext": false,
     "bitwise": true,
     "camelcase": true,
