@@ -19,17 +19,17 @@ angular.forEach([
       eventType += splitByCamelCase[2];
     }
 
-    angular.module('angularLeap').directive(directiveName, function ($parse, leap, leapHelperService) {
+    angular.module('angularLeap').directive(directiveName, function ($parse, leap) {
       return function (scope, element, attr) {
         var fn = $parse(attr[directiveName]);
-        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.timeout();
+        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.defaultTimeout();
 
         leap.controller().on('gesture', function (gesture) {
           if (gesture.type === eventType) {
-            if (eventType === 'swipe' && !leapHelperService.testForDirection(gesture, direction)) {
+            if (eventType === 'isSwipe' && !leap.gestureMovement(gesture).isSwipe[direction.toLowerCase()]) {
               return;
             }
-            if (!leapHelperService.timeout(timeout)) {
+            if (!leap.timeout(timeout)) {
               scope.$apply(function () {
                 fn(scope, {$gesture: gesture});
               });
