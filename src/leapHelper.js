@@ -2,9 +2,9 @@
 
 angular.module('angularLeap')
 
-    .factory('leapHelperService', function ($timeout, leapConfig) {
+    .factory('leapHelperService', function ($timeout,leap) {
         var timeoutActive = false,
-            limit = leapConfig.defaultGestureIntense;
+            limit = leap.gestureIntense();
 
         var getMovements = function (gesture) {
             var xdiff = gesture.startPosition[0] - gesture.position[0],
