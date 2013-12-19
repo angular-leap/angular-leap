@@ -20,12 +20,12 @@
     "grunt-ngmin": "0.0.3",
     "grunt-ngdocs": "0.1.7",
     "grunt-contrib-uglify": "0.2.7",
-    "grunt-contrib-jshint": "0.7.2",
+    "grunt-contrib-jshint": "~0.7.2",
     "load-grunt-tasks": "0.2.0",
     "grunt-karma": "0.6.2",
     "grunt-conventional-changelog": "1.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    "test": "grunt ci"
   }
 }
