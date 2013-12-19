@@ -11,8 +11,8 @@ angular.forEach([
   'leapSwipeBackward'
 ], function (directiveName) {
     var splitByCamelCase = directiveName.replace(/([A-Z])/g, ' $1').split(' '),
-        eventType = splitByCamelCase[1].toLowerCase(),
-        direction = splitByCamelCase[2];
+      eventType = splitByCamelCase[1].toLowerCase(),
+      direction = splitByCamelCase[2];
 
     // e.g. ScreenTap + KeyTap
     if (splitByCamelCase[2] === 'Tap') {

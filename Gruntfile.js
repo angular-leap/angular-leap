@@ -2,15 +2,15 @@
 
 module.exports = function (grunt) {
   /**
-  * Load required Grunt tasks. These are installed based on the versions listed
-  * in `package.json` when you do `npm install --save-dev` in this project.
-  */
+   * Load required Grunt tasks. These are installed based on the versions listed
+   * in `package.json` when you do `npm install --save-dev` in this project.
+   */
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
 
     buildConfig: {
-      src : 'src/',
+      src: 'src/',
       dist: 'build',
       name: 'angular-leap'
     },
@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 
     concat: {
       dist: {
-        src : ['<%= buildConfig.src %>/*.js', '<%= buildConfig.src %>/**/*.js'],
+        src: ['<%= buildConfig.src %>/*.js', '<%= buildConfig.src %>/**/*.js'],
         dest: '<%= buildConfig.dist %>/<%= buildConfig.name %>.js'
       }
     },
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
         dest: 'site',
         html5Mode: false,
         title: 'angular-leap',
-        startpage: '/api',
+        startpage: '/api'
       },
       api: {
         src: ['src/**/*.js', 'docs/content/api/*.ngdoc'],
@@ -105,5 +105,11 @@ module.exports = function (grunt) {
     'concat',
     'ngmin',
     'uglify'
+  ]);
+
+
+  grunt.registerTask('ci', [
+    'jshint:all',
+    'karma:unit'
   ]);
 };
