@@ -19,10 +19,10 @@ angular.forEach([
       eventType += splitByCamelCase[2];
     }
 
-    angular.module('angularLeap').directive(directiveName, function ($parse, leap, leapHelperService, leapConfig) {
+    angular.module('angularLeap').directive(directiveName, function ($parse, leap, leapHelperService) {
       return function (scope, element, attr) {
         var fn = $parse(attr[directiveName]);
-        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leapConfig.defaultTimeout;
+        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.timeout();
 
         leap.controller().on('gesture', function (gesture) {
           if (gesture.type === eventType) {
