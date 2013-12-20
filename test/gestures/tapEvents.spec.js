@@ -142,7 +142,7 @@ describe("A Tap gesture directive", function () {
             type     : tapType[0] + "Tap"
         });
 
-        expect($browser.defer.calls[0].args[1]).toBe(leap.defaultTimeout());
+        expect($browser.defer.calls[0].args[1]).toBe(leap.config().defaultTimeout);
     }));
 
     it("should use timeout if it configured", inject(function ($rootScope, $compile, $browser) {

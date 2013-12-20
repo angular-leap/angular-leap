@@ -22,14 +22,14 @@ angular.forEach([
     angular.module('angularLeap').directive(directiveName, function ($parse, leap) {
       return function (scope, element, attr) {
         var fn = $parse(attr[directiveName]);
-        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.defaultTimeout();
+        var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.config().defaultTimeout;
 
         leap.controller().on('gesture', function (gesture) {
           if (gesture.type === eventType) {
             if (eventType === 'isSwipe' && !leap.gestureMovement(gesture).isSwipe[direction.toLowerCase()]) {
               return;
             }
-            if (!leap.timeout(timeout)) {
+            if (!leap.fn.timeout(timeout)) {
               scope.$apply(function () {
                 fn(scope, {$gesture: gesture});
               });
