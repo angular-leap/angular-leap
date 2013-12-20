@@ -54,6 +54,7 @@ angular.module('angularLeap')
     };
     // Service API
     return {
+      // This wrapper functions just for API readability ( else you can't see the params without searching)
       timeout: function (ms) {
         return _timeoutFn(ms);
       },
