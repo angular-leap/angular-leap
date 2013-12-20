@@ -17,7 +17,7 @@ angular.module('angularLeap')
     // Provider API
     this.config = leapConfigProvider;
 
-    this.$get = function ($window, $timeout, leapConfig, leapFn) {
+    this.$get = function ($window, leapConfig, leapFn) {
       if (!$window.Leap) {
         throw new Error('You should include LeapJS Native JavaScript API');
       }
@@ -31,5 +31,5 @@ angular.module('angularLeap')
 
       };
     };
-    
+
   });

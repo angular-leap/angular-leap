@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('angularLeap')
-  .factory('leapFn', function ($window, $timeout, leapConfig) {
+  .factory('leapFn', function ($timeout, leapConfig) {
     var _timeoutFn,
       _gestureMovement,
       timeoutActive = false;
 
-    _timeoutFn = function (ms, $timeout) {
+    _timeoutFn = function (ms) {
       var beforeState = timeoutActive;
       if (!timeoutActive && ms) {
         timeoutActive = true;
@@ -55,7 +55,7 @@ angular.module('angularLeap')
     // Service API
     return {
       timeout: function (ms) {
-        return _timeoutFn(ms, $timeout);
+        return _timeoutFn(ms);
       },
       gestureMovement: function (gesture) {
         return _gestureMovement(gesture);
