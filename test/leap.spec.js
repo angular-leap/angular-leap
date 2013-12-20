@@ -95,67 +95,10 @@ describe('A leapService', function () {
       }));
     });
 
-    describe('configuration', function () {
 
-
-      var _Leap;
-      var _LeapController;
-
-      beforeEach(inject(function ($window) {
-        _LeapController = function () {
-        };
-        _LeapController.prototype.connect = function () {
-        };
-
-
-        _Leap = function () {
-        };
-        _Leap.Controller = _LeapController;
-
-        $window.Leap = _Leap;
-      }));
-
-      describe('key: timeout', function () {
-        it('should define a timeout function', inject(function (leap) {
-          expect(leap.defaultTimeout).toBeDefined();
-        }));
-
-        it('should define a default timeout at ' + testBasicConfiguration.timeout, inject(function (leap) {
-          expect(leap.defaultTimeout()).toBe(testBasicConfiguration.timeout);
-        }));
-
-        it('should define a getter/setter', inject(function (leap) {
-          var tempValue = leap.defaultTimeout();
-          expect(leap.defaultTimeout()).toBe(tempValue);
-          expect(leap.defaultTimeout(tempValue + 100)).not.toBe(tempValue);
-          expect(leap.defaultTimeout(tempValue + 100)).toBe(tempValue + 100);
-          expect(leap.defaultTimeout()).toBe(tempValue + 100);
-        }));
-
-      });
-
-
-      describe('key: gestureIntense', function () {
-        it('should define a gestureIntense function', inject(function (leap) {
-          expect(leap.gestureIntense).toBeDefined();
-        }));
-
-        it('should define a default gestureIntense at ' + testBasicConfiguration.gestureIntense, inject(function (leap) {
-          expect(leap.gestureIntense()).toBe(testBasicConfiguration.gestureIntense);
-        }));
-
-        it('should define a getter/setter', inject(function (leap) {
-          var tempValue = leap.gestureIntense();
-          expect(leap.gestureIntense()).toBe(tempValue);
-          expect(leap.gestureIntense(tempValue + 100)).not.toBe(tempValue);
-          expect(leap.gestureIntense(tempValue + 100)).toBe(tempValue + 100);
-          expect(leap.gestureIntense()).toBe(tempValue + 100);
-        }));
-
-      });
-
-
-    });
+    it('should provide configuration service via config()', inject(function (leap, leapConfig) {
+      expect(leap.config()).toBeDefined(leapConfig);
+    }));
 
     it("should offer a timeout function", inject(function (leap) {
       expect(leap.timeout).toBeDefined();
@@ -228,36 +171,7 @@ describe('A leapService', function () {
 
   });
 
-  describe('configured instance', function () {
-    beforeEach(module('angularLeap', function (leapProvider) {
-      leapProvider.defaultTimeout(testBasicConfiguration.timeout + 1);
-    }));
-    describe('key: timeout', function () {
-      it('should define a default timeout function', inject(function (leap) {
-        expect(leap.defaultTimeout).toBeDefined();
-      }));
 
-      it('should define a default timeout at ' + testBasicConfiguration.timeout + '+ 1', inject(function (leap) {
-        expect(leap.defaultTimeout()).toBe(testBasicConfiguration.timeout + 1);
-      }));
-    });
-  });
-
-
-  describe('configured instance', function () {
-    beforeEach(module('angularLeap', function (leapProvider) {
-      leapProvider.gestureIntense(testBasicConfiguration.gestureIntense + 1);
-    }));
-    describe('key: timeout', function () {
-      it('should define a default gestureIntense function', inject(function (leap) {
-        expect(leap.gestureIntense).toBeDefined();
-      }));
-
-      it('should define a default gestureIntense at ' + testBasicConfiguration.gestureIntense + '+ 1', inject(function (leap) {
-        expect(leap.gestureIntense()).toBe(testBasicConfiguration.gestureIntense + 1);
-      }));
-    });
-  });
 
 
 });

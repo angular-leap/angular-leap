@@ -101,7 +101,7 @@ angular.module('angularLeap')
       return _gestureIntenseFn(gestureIntense);
     };
 
-    this.$get = function ($window, $timeout) {
+    this.$get = function ($window, $timeout, leapConfig) {
       if (!$window.Leap) {
         throw new Error('You should include LeapJS Native JavaScript API');
       }
@@ -116,12 +116,8 @@ angular.module('angularLeap')
         gestureMovement: function (gesture) {
           return _gestureMovement(gesture);
         },
-        defaultTimeout: function (timeout) {
-          return _defaultTimeoutFn(timeout);
-        },
-        gestureIntense: function (gestureIntense) {
-          return _gestureIntenseFn(gestureIntense);
-        }
+        config: leapConfig
+
       };
     };
 
