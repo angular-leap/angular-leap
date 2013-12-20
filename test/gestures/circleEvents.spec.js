@@ -128,7 +128,7 @@ describe("A Circle gesture directive", function () {
             type     : eventType[0] + ""
         });
 
-        expect($browser.defer.calls[0].args[1]).toBe(leap.timeout());
+        expect($browser.defer.calls[0].args[1]).toBe(leap.config().defaultTimeout);
     }));
 
     it("should use timeout if it configured", inject(function ($rootScope, $compile, $browser) {

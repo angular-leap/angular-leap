@@ -143,7 +143,7 @@ describe("A swipe gesture directive", function () {
                 defaultEvent.position = testEventsFor[direction];
                 _LeapController.prototype.on.calls[0].args[1](defaultEvent);
 
-                expect($browser.defer.calls[0].args[1]).toBe(leap.timeout());
+                expect($browser.defer.calls[0].args[1]).toBe(leap.config().defaultTimeout);
             }));
 
             it("should use timeout if it configured", inject(function ($browser) {

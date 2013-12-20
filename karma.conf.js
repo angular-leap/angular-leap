@@ -8,6 +8,7 @@ module.exports = function (config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // src
       'src/**/module.js',
+      'src/**/*Config.js',
       'src/**/*.js',
       /* Match all test files */
       'test/**/*.js'

@@ -1,47 +1,34 @@
 'use strict';
 
 angular.module('angularLeap')
-  .provider('leap', function () {
+  .provider('leap', function (leapConfigProvider) {
 
-    var _timeOutFn,
-      _gestureIntenseFn,
-      timeout = 650,
-      gestureIntense = 0.5;
+    var controller,
+      _controllerFn;
 
-    this.timeout = _timeOutFn = function (timeoutArgument) {
-      if (timeoutArgument) {
-        timeout = timeoutArgument;
+    _controllerFn = function ($window) {
+      if (!controller) {
+        controller = new $window.Leap.Controller({enableGestures: true});
+        controller.connect();
       }
-      return timeout;
+      return controller;
     };
 
-    this.gestureIntense = _gestureIntenseFn = function (gestureIntenseArgument) {
-      if (gestureIntenseArgument) {
-        gestureIntense = gestureIntenseArgument;
-      }
-      return gestureIntense;
-    };
+    // Provider API
+    this.config = leapConfigProvider;
 
-
-    this.$get = function ($window) {
+    this.$get = function ($window, leapConfig, leapFn) {
       if (!$window.Leap) {
         throw new Error('You should include LeapJS Native JavaScript API');
       }
-
-      var controller;
-
-      var getController = function () {
-        if (!controller) {
-          controller = new $window.Leap.Controller({enableGestures: true});
-          controller.connect();
-        }
-        return controller;
-      };
-
+      // Service API
       return {
-        controller: getController,
-        timeout: _timeOutFn,
-        gestureIntense: _gestureIntenseFn
+        controller: function () {
+          return _controllerFn($window);
+        },
+        fn: leapFn,
+        config: leapConfig
+
       };
     };
 
