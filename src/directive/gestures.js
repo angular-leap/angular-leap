@@ -3,6 +3,8 @@ angular.forEach([
   'leapKeyTap',
   'leapScreenTap',
   'leapCircle',
+  'leapCircleClockwise',
+  'leapCircleCounterClockwise',
   'leapSwipeLeft',
   'leapSwipeRight',
   'leapSwipeUp',
@@ -18,6 +20,12 @@ angular.forEach([
     if (splitByCamelCase[2] === 'Tap') {
       eventType += splitByCamelCase[2];
     }
+    else if (splitByCamelCase[2] === 'Circle') {
+      eventType += splitByCamelCase[2];
+      if (splitByCamelCase[3]) {
+        eventType += splitByCamelCase[3];
+      }
+    }
 
     angular.module('angularLeap').directive(directiveName, function ($parse, leap) {
       return function (scope, element, attr) {
@@ -27,6 +35,10 @@ angular.forEach([
         leap.controller().on('gesture', function (gesture) {
           if (gesture.type === eventType) {
             if (eventType === 'swipe' && !leap.fn.gestureMovement(gesture).isSwipe[direction.toLowerCase()]) {
+              return;
+            }
+            // 'counter-clockwise' : 'clockwise'
+            if (splitByCamelCase[2] === 'Circle' && direction && leap.fn.gestureMovement(gesture).type !== direction.toLowerCase()) {
               return;
             }
             if (!leap.fn.timeout(timeout)) {
