@@ -1,4 +1,4 @@
-ddescribe("A Circle gesture directive", function () {
+describe("A Circle gesture directive", function () {
 
   beforeEach(module("angularLeap"));
 
@@ -33,7 +33,7 @@ ddescribe("A Circle gesture directive", function () {
 
 
   angular.forEach(eventTypes, function (type) {
-    ddescribe(type, function () {
+    describe(type, function () {
 
 
       it("should be executed and register " + type + " gesture event listener ", inject(function ($rootScope, $compile) {
