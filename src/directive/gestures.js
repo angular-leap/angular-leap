@@ -34,11 +34,11 @@ angular.forEach([
 
         leap.controller().on('gesture', function (gesture) {
           if (gesture.type === eventType) {
-            if (eventType === 'swipe' && !leap.fn.gestureMovement(gesture).isSwipe[direction.toLowerCase()]) {
+            if (eventType === 'swipe' && !leap.fn.swipeMovement(gesture).isSwipe[direction.toLowerCase()]) {
               return;
             }
             // 'counter-clockwise' : 'clockwise'
-            if (splitByCamelCase[2] === 'Circle' && direction && leap.fn.gestureMovement(gesture).type !== direction.toLowerCase()) {
+            if (splitByCamelCase[2] === 'Circle' && direction && leap.fn.circleMovement(gesture).type !== direction.toLowerCase()) {
               return;
             }
             if (!leap.fn.timeout(timeout)) {

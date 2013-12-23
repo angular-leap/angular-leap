@@ -3,12 +3,11 @@
 angular.module('angularLeap')
   .factory('leapFn', function ($timeout, leapConfig) {
     var _timeoutFn,
-      _gestureMovement,
-      swipeMovement,
-      circleMovement,
+      _swipeMovement,
+      _circleMovement,
       timeoutActive = false;
 
-    swipeMovement = function (gesture) {
+    _swipeMovement = function (gesture) {
       var xdiff = gesture.startPosition[0] - gesture.position[0],
         ydiff = gesture.startPosition[1] - gesture.position[1],
         zdiff = gesture.startPosition[2] - gesture.position[2];
@@ -43,9 +42,9 @@ angular.module('angularLeap')
       return movement;
     };
 
-    circleMovement = function (gesture) {
+    _circleMovement = function (gesture) {
       var movement = {
-        count: Math.round(gesture.progress),
+        count: Math.round(gesture.progress, 10),
         type: (gesture.normal[2] > 0) ? 'counterClockwise' : 'clockwise'
       };
       return movement;
@@ -64,25 +63,17 @@ angular.module('angularLeap')
     };
 
 
-    _gestureMovement = function (gesture) {
-      var movement;
-      if (gesture.type === 'swipe') {
-        movement = swipeMovement(gesture);
-      }
-      if (gesture.type === 'circle') {
-        movement = circleMovement(gesture);
-      }
-      return movement;
-    };
-
     // Service API
     return {
       // This wrapper functions just for API readability ( else you can't see the params without searching)
       timeout: function (ms) {
         return _timeoutFn(ms);
       },
-      gestureMovement: function (gesture) {
-        return _gestureMovement(gesture);
+      swipeMovement: function (gesture) {
+        return _swipeMovement(gesture);
+      },
+      circleMovement: function (gesture) {
+        return _circleMovement(gesture);
       }
     };
   });

@@ -10,7 +10,7 @@ describe('A leapFnService', function () {
   var directions = ['left', 'right', 'up', 'down', 'forward', 'backward'],
     i,
     currentTestDirection,
-    defaultEvent = {startPosition: [0, 0, 0], type: 'swipe'},
+    swipeEvent = {startPosition: [0, 0, 0], type: 'swipe'},
     testEventsFor = {
       left: [-1, 0, 0],
       right: [1, 0, 0],
@@ -25,9 +25,21 @@ describe('A leapFnService', function () {
     leapFn = _leapFn_;
   }));
 
-  it('should offer a timeout function', function () {
-    expect(leapFn.timeout).toBeDefined();
+
+  describe('Public API', function () {
+    it('should offer a timeout function', function () {
+      expect(leapFn.timeout).toBeDefined();
+    });
+
+    it('should offer a circleMovement function', function () {
+      expect(leapFn.circleMovement).toBeDefined();
+    });
+
+    it('should offer a swipeMovement function', function () {
+      expect(leapFn.swipeMovement).toBeDefined();
+    });
   });
+
 
   describe('timeout function', function () {
 
@@ -57,37 +69,151 @@ describe('A leapFnService', function () {
 
   });
 
+  describe('swipeMovement function', function () {
 
-  describe('gestureMovement function', function () {
+    it('should return an structured object', function () {
+      swipeEvent.position = [1, 2, 3];
+      var object = leapFn.swipeMovement(swipeEvent);
 
-    it('should be defined', function () {
-      expect(leapFn.gestureMovement).toBeDefined();
+      expect(object.x).toBeDefined();
+      expect(object.x.type).toBeDefined();
+      expect(object.x.distance).toBeDefined();
+      expect(object.x.direction).toBeDefined();
+
+      expect(object.y).toBeDefined();
+      expect(object.y.type).toBeDefined();
+      expect(object.y.distance).toBeDefined();
+      expect(object.y.direction).toBeDefined();
+
+      expect(object.z).toBeDefined();
+      expect(object.z.type).toBeDefined();
+      expect(object.z.distance).toBeDefined();
+      expect(object.z.direction).toBeDefined();
+
     });
 
-    describe('swipe property', function () {
-      for (i in directions) {
-        currentTestDirection = directions[i];
-        expect(currentTestDirection).toBeDefined();
-        for (var event in testEventsFor) {
-          it('should true if ' + currentTestDirection + '===' + event, function () {
-              // Test current = true, else false
-              defaultEvent.position = testEventsFor[event];
-              expect(leapFn.gestureMovement(defaultEvent).isSwipe[currentTestDirection.toLowerCase()]).toBe(currentTestDirection === event);
-            }
-          );
-        }
+    it('should return the direction', function () {
+      swipeEvent.position = [1, 2, 3];
+      var object = leapFn.swipeMovement(swipeEvent);
+
+      expect(object.x.direction).toBe(-swipeEvent.position[0]);
+      expect(object.y.direction).toBe(-swipeEvent.position[1]);
+      expect(object.z.direction).toBe(-swipeEvent.position[2]);
+
+    });
+
+    it('should return the distance as absolute number of the direction', function () {
+      spyOn(Math, 'abs');
+      swipeEvent.position = [1, 2, 3];
+      leapFn.swipeMovement(swipeEvent);
+      expect(Math.abs.calls.length).toBe(3);
+
+    });
+
+    it('should detect right direction', function () {
+      swipeEvent.position = [1, 0, 0];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.x.type).toBe('right');
+    });
+
+    it('should detect left direction', function () {
+      swipeEvent.position = [-1, 0, 0];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.x.type).toBe('left');
+    });
+
+    it('should detect up direction', function () {
+      swipeEvent.position = [0, 1, 0];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.y.type).toBe('up');
+    });
+
+    it('should detect down direction', function () {
+      swipeEvent.position = [0, -1, 0];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.y.type).toBe('down');
+    });
+
+    it('should detect backward direction', function () {
+      swipeEvent.position = [0, 0, 1];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.z.type).toBe('backward');
+    });
+
+    it('should detect forward direction', function () {
+      swipeEvent.position = [0 , 0, -1];
+      var object = leapFn.swipeMovement(swipeEvent);
+      expect(object.z.type).toBe('forward');
+    });
+
+
+    for (i in directions) {
+      currentTestDirection = directions[i];
+      expect(currentTestDirection).toBeDefined();
+      for (var event in testEventsFor) {
+        it('should return correct isSwipe hashmap' + currentTestDirection + '===' + event, function () {
+            // Test current = true, else false
+            swipeEvent.position = testEventsFor[event];
+            expect(leapFn.swipeMovement(swipeEvent).isSwipe[currentTestDirection.toLowerCase()]).toBe(currentTestDirection === event);
+          }
+        );
       }
-    });
+    }
 
     it('should use a minimum limit for detection', function () {
 
-      defaultEvent.position = [0.1, 0, 0];
-      expect(leapFn.gestureMovement(defaultEvent).isSwipe['left']).toBe(false);
-      defaultEvent.position = [-1, 0, 0];
-      expect(leapFn.gestureMovement(defaultEvent).isSwipe['left']).toBe(true);
+      swipeEvent.position = [-0.1, 0, 0];
+      expect(leapFn.swipeMovement(swipeEvent).isSwipe['left']).toBe(false);
+      swipeEvent.position = [-1, 0, 0];
+      expect(leapFn.swipeMovement(swipeEvent).isSwipe['left']).toBe(true);
 
     });
   });
+
+
+  describe('circleMovement', function () {
+
+    var circleEvent = {
+      type: 'circle'
+    };
+
+    it('should detect clockwise circle-events', function () {
+      circleEvent.normal = [0, 0, -1];
+      expect(leapFn.circleMovement(circleEvent).type).toBe('clockwise');
+    });
+
+    it('should detect counter-clockwise circle-events', function () {
+      circleEvent.normal = [0, 0, 1];
+      expect(leapFn.circleMovement(circleEvent).type).toBe('counterClockwise');
+    });
+
+
+    it('should detect the count of circle-events', function () {
+      circleEvent.normal = [0, 0, 1];
+      circleEvent.progress = 10;
+      expect(leapFn.circleMovement(circleEvent).count).toBe(circleEvent.progress);
+    });
+
+
+    it('should detect the rounded count of circle-events', function () {
+      circleEvent.normal = [0, 0, 1];
+      circleEvent.progress = 10.1234;
+      expect(leapFn.circleMovement(circleEvent).count).not.toBe(circleEvent.progress);
+      expect(leapFn.circleMovement(circleEvent).count).toBe(Math.round(circleEvent.progress, 10));
+    });
+
+    it('should detect the rounded count of circle-events with a base of 10', function () {
+      spyOn(Math, 'round');
+      circleEvent.normal = [0, 0, 1];
+      circleEvent.progress = 10.1234;
+      // execute
+      leapFn.circleMovement(circleEvent);
+      expect(Math.round).toHaveBeenCalled();
+      expect(Math.round.calls[0].args[1]).toBe(10);
+    });
+
+  });
+
 });
 
 

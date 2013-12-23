@@ -42,7 +42,7 @@ describe("A Circle gesture directive", function () {
 
         var html = "<div leap-" + type + "='test=test+1'></div>";
         var scope = $rootScope.$new();
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
         expect(_LeapController.prototype.connect).toHaveBeenCalled();
         expect(_LeapController.prototype.on).toHaveBeenCalled();
@@ -54,7 +54,7 @@ describe("A Circle gesture directive", function () {
         spyOn(_LeapController.prototype, "on");
         var html = "<div leap-" + type + "='test=test+1'></div>";
         var scope = $rootScope.$new();
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
         spyOn(scope, "$apply");
 
         // Simulate Swipe Event, execute function
@@ -69,7 +69,7 @@ describe("A Circle gesture directive", function () {
 
         var html = "<div leap-" + type + "='test=test+1'></div>";
         var scope = $rootScope.$new();
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
 
         spyOn(scope, "$apply");
@@ -94,7 +94,7 @@ describe("A Circle gesture directive", function () {
 
         var html = "<div leap-" + type + "='test=test+1'></div>";
         var scope = $rootScope.$new();
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
         scope.test = 1;
 
@@ -112,7 +112,7 @@ describe("A Circle gesture directive", function () {
         spyOn(_LeapController.prototype, "on");
 
         var html = "<div leap-" + type + "='testFunction()'></div>";
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
         defaultEvent.normal = testEventsFor[type];
         _LeapController.prototype.on.calls[0].args[1](defaultEvent);
@@ -126,7 +126,7 @@ describe("A Circle gesture directive", function () {
         spyOn(_LeapController.prototype, "on");
         var scope = $rootScope.$new();
         var html = "<div leap-" + type + "='testFunction()'></div>";
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
         defaultEvent.normal = testEventsFor[type];
         _LeapController.prototype.on.calls[0].args[1](defaultEvent);
@@ -139,7 +139,7 @@ describe("A Circle gesture directive", function () {
         spyOn(_LeapController.prototype, "on");
         var scope = $rootScope.$new();
         var html = "<div leap-" + type + "='testFunction()' leap-timeout='1000'></div>";
-        var element = $compile(html)(scope);
+        $compile(html)(scope);
 
         defaultEvent.normal = testEventsFor[type];
         _LeapController.prototype.on.calls[0].args[1](defaultEvent);
