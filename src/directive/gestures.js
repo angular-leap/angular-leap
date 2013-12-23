@@ -24,7 +24,7 @@ angular.forEach([
         var fn = $parse(attr[directiveName]);
         var timeout = (attr.leapTimeout) ? attr.leapTimeout : leap.config().defaultTimeout;
 
-        leap.controller().on('gesture', function (gesture) {
+        var listener = function (gesture) {
           if (gesture.type === eventType) {
             if (eventType === 'swipe' && !leap.fn.gestureMovement(gesture).isSwipe[direction.toLowerCase()]) {
               return;
@@ -35,6 +35,11 @@ angular.forEach([
               });
             }
           }
+        };
+        // Listener
+        leap.controller().on('gesture', listener);
+        scope.$on('$destroy', function () {
+          leap.controller().removeListener('gesture', listener);
         });
       };
     });

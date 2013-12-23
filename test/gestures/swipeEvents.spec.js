@@ -27,6 +27,8 @@ describe("A swipe gesture directive", function () {
     };
     _LeapController.prototype.on = function () {
     };
+    _LeapController.prototype.removeListener = function () {
+    };
     _Leap = function () {
     };
     _Leap.Controller = _LeapController;
@@ -182,6 +184,27 @@ describe("A swipe gesture directive", function () {
 
         expect(scope.test).toBe(2);
 
+      }));
+
+      it("should be executed and de-register gesture event listener on $destroy", inject(function () {
+        spyOn(_LeapController.prototype, "connect");
+        spyOn(_LeapController.prototype, "on");
+        spyOn(_LeapController.prototype, "removeListener");
+
+        var html = "<div leap-swipe-" + direction + "='test=test+1'></div>";
+        var scope = $rootScope.$new();
+        var element = $compile(html)(scope);
+
+        expect(_LeapController.prototype.connect).toHaveBeenCalled();
+        expect(_LeapController.prototype.on).toHaveBeenCalled();
+        expect(_LeapController.prototype.on.calls[0].args[0]).toEqual("gesture");
+
+        expect(_LeapController.prototype.removeListener).not.toHaveBeenCalled();
+        scope.$destroy();
+        expect(_LeapController.prototype.removeListener).toHaveBeenCalled();
+        expect(_LeapController.prototype.removeListener.calls[0].args[0]).toEqual("gesture");
+
+        expect(_LeapController.prototype.removeListener.calls[0].args[1]).toEqual(_LeapController.prototype.on.calls[0].args[1]);
       }));
 
     });
