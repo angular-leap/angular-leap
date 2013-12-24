@@ -27,7 +27,9 @@ bower install angular-leap
 	<div leap-swipe-forward="a=a*a">Swipe Forward => a^2</div>
 	<div leap-swipe-backward="a=a/2">Swipe Backward => a/2</div>
 	
-	<div leap-circle="addByCircleSze($gesture)">Swipe Down => +%CicleSize%</div>
+	<div leap-circle="addByCircleSze($gesture)">Circle => +%CicleSize%</div>
+	<div leap-circle-clockwise="addByCircleSze($gesture)">Circle clockwise => +%CicleSize%</div>
+	<div leap-circle-counter-clockwise="addByCircleSze($gesture)">Circle counter-clockwise => +%CicleSize%</div>
 	
 	<div leap-screentap="sqrt($gesture)">ScreenTap => sqrt</div>
 	<div leap-keytap="pow2($gesture)">Swipe Down => power^%Hands%</div>
