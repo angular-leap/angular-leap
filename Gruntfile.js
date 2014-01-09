@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 
     concat: {
       dist: {
-        src: ['<%= buildConfig.src %>/*.js', '<%= buildConfig.src %>/**/*.js'],
+        src: ['<%= buildConfig.src %>/module.js', '<%= buildConfig.src %>/leapConfig.js', '<%= buildConfig.src %>/*.js', '<%= buildConfig.src %>/**/*.js'],
         dest: '<%= buildConfig.dist %>/<%= buildConfig.name %>.js'
       }
     },
