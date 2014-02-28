@@ -33,6 +33,21 @@ bower install angular-leap
 	
 	<div leap-screentap="sqrt($gesture)">ScreenTap => sqrt</div>
 	<div leap-keytap="pow2($gesture)">Swipe Down => power^%Hands%</div>
+
+
+    <!-- Bind frame values to the scope (default 50ms) -->
+	<div leap-bind="{hands: 'hands'}" style="position:absolute;left:{{hands[0].palmPosition[0]}}px">{{hands[0].palmPosition[0]}}</div>
+
+	<!-- Bind frame values to the scope all 1000ms via attribute config -->
+    <div leap-bind="{hands: 'hands'}"
+         leap-bind-update-rate="1000"
+         style="position:absolute;left:{{hands[0].palmPosition[0]}}px">{{hands[0].palmPosition[0]}}</div>
+
+
+     <div leap-bind="{x: 'hands[0].palmPosition[0]'}"
+          leap-bind-update-rate="1000"
+          style="position:absolute;left:{{x}}px">{{x}}</div>
+
 </div>
 ```
 
