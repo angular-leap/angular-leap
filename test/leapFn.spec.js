@@ -31,6 +31,10 @@ describe('A leapFnService', function () {
       expect(leapFn.timeout).toBeDefined();
     });
 
+    it('should offer a swipeMovement function', function () {
+      expect(leapFn.movement).toBeDefined();
+    });
+
     it('should offer a circleMovement function', function () {
       expect(leapFn.circleMovement).toBeDefined();
     });
@@ -69,11 +73,11 @@ describe('A leapFnService', function () {
 
   });
 
-  describe('swipeMovement function', function () {
+  describe('movement function', function () {
 
     it('should return an structured object', function () {
       swipeEvent.position = [1, 2, 3];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
 
       expect(object.x).toBeDefined();
       expect(object.x.type).toBeDefined();
@@ -94,55 +98,55 @@ describe('A leapFnService', function () {
 
     it('should return the direction', function () {
       swipeEvent.position = [1, 2, 3];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
 
-      expect(object.x.direction).toBe(-swipeEvent.position[0]);
-      expect(object.y.direction).toBe(-swipeEvent.position[1]);
-      expect(object.z.direction).toBe(-swipeEvent.position[2]);
+      expect(object.x.direction).toBe(swipeEvent.position[0]);
+      expect(object.y.direction).toBe(swipeEvent.position[1]);
+      expect(object.z.direction).toBe(swipeEvent.position[2]);
 
     });
 
     it('should return the distance as absolute number of the direction', function () {
       spyOn(Math, 'abs');
       swipeEvent.position = [1, 2, 3];
-      leapFn.swipeMovement(swipeEvent);
+      leapFn.movement(swipeEvent);
       expect(Math.abs.calls.length).toBe(3);
 
     });
 
     it('should detect right direction', function () {
       swipeEvent.position = [1, 0, 0];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
       expect(object.x.type).toBe('right');
     });
 
     it('should detect left direction', function () {
       swipeEvent.position = [-1, 0, 0];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
       expect(object.x.type).toBe('left');
     });
 
     it('should detect up direction', function () {
       swipeEvent.position = [0, 1, 0];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
       expect(object.y.type).toBe('up');
     });
 
     it('should detect down direction', function () {
       swipeEvent.position = [0, -1, 0];
-      var object = leapFn.swipeMovement(swipeEvent);
+      var object = leapFn.movement(swipeEvent);
       expect(object.y.type).toBe('down');
     });
 
     it('should detect backward direction', function () {
-      swipeEvent.position = [0, 0, 1];
-      var object = leapFn.swipeMovement(swipeEvent);
+      swipeEvent.position = [0, 0, -1];
+      var object = leapFn.movement(swipeEvent);
       expect(object.z.type).toBe('backward');
     });
 
     it('should detect forward direction', function () {
-      swipeEvent.position = [0 , 0, -1];
-      var object = leapFn.swipeMovement(swipeEvent);
+      swipeEvent.position = [0 , 0, 1];
+      var object = leapFn.movement(swipeEvent);
       expect(object.z.type).toBe('forward');
     });
 
@@ -154,7 +158,7 @@ describe('A leapFnService', function () {
         it('should return correct isSwipe hashmap' + currentTestDirection + '===' + event, function () {
             // Test current = true, else false
             swipeEvent.position = testEventsFor[event];
-            expect(leapFn.swipeMovement(swipeEvent).isSwipe[currentTestDirection.toLowerCase()]).toBe(currentTestDirection === event);
+            expect(leapFn.movement(swipeEvent).isSwipe[currentTestDirection.toLowerCase()]).toBe(currentTestDirection === event);
           }
         );
       }
@@ -163,9 +167,57 @@ describe('A leapFnService', function () {
     it('should use a minimum limit for detection', function () {
 
       swipeEvent.position = [-0.1, 0, 0];
-      expect(leapFn.swipeMovement(swipeEvent).isSwipe['left']).toBe(false);
+      expect(leapFn.movement(swipeEvent).isSwipe['left']).toBe(false);
       swipeEvent.position = [-1, 0, 0];
-      expect(leapFn.swipeMovement(swipeEvent).isSwipe['left']).toBe(true);
+      expect(leapFn.movement(swipeEvent).isSwipe['left']).toBe(true);
+
+    });
+  });
+
+
+
+  describe('swipeMovement function', function () {
+
+    it('should return an structured object', function () {
+      swipeEvent.position = [1, 2, 3];
+      var object = leapFn.swipeMovement(swipeEvent);
+
+      expect(object.direction).toBeDefined();
+      expect(object.distance).toBeDefined();
+      expect(object.type).toBeDefined();
+
+      expect(object.movement.x).toBeDefined();
+      expect(object.movement.x.type).toBeDefined();
+      expect(object.movement.x.distance).toBeDefined();
+      expect(object.movement.x.direction).toBeDefined();
+
+      expect(object.movement.y).toBeDefined();
+      expect(object.movement.y.type).toBeDefined();
+      expect(object.movement.y.distance).toBeDefined();
+      expect(object.movement.y.direction).toBeDefined();
+
+      expect(object.movement.z).toBeDefined();
+      expect(object.movement.z.type).toBeDefined();
+      expect(object.movement.z.distance).toBeDefined();
+      expect(object.movement.z.direction).toBeDefined();
+
+    });
+
+    it('should use a minimum limit for detection', function () {
+
+      swipeEvent.position = [-0.1, 0, 0];
+      expect(leapFn.swipeMovement(swipeEvent)).toBeUndefined();
+      swipeEvent.position = [-1, 0, 0];
+      expect(leapFn.swipeMovement(swipeEvent)).toBeDefined();
+
+    });
+
+    it('should only return the direction with biggest movement', function () {
+
+      swipeEvent.position = [10, 10, 100];
+      expect(leapFn.swipeMovement(swipeEvent).type).toBe('forward');
+      swipeEvent.position = [10, 100, 10];
+      expect(leapFn.swipeMovement(swipeEvent).type).toBe('up');
 
     });
   });
