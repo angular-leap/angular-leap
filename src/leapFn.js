@@ -3,11 +3,12 @@
 angular.module('angularLeap')
   .factory('leapFn', function ($timeout, leapConfig) {
     var _timeoutFn,
-      _swipeMovement,
+      _movement,
       _circleMovement,
+      _swipeMovement,
       timeoutActive = false;
 
-    _swipeMovement = function (gesture) {
+    _movement = function (gesture) {
       var xdiff = gesture.startPosition[0] - gesture.position[0],
         ydiff = gesture.startPosition[1] - gesture.position[1],
         zdiff = gesture.startPosition[2] - gesture.position[2];
@@ -16,17 +17,17 @@ angular.module('angularLeap')
         x: {
           distance: Math.abs(xdiff),
           type: (xdiff > 0) ? 'left' : 'right',
-          direction: xdiff
+          direction: -xdiff
         },
         y: {
           distance: Math.abs(ydiff),
           type: (ydiff > 0) ? 'down' : 'up',
-          direction: ydiff
+          direction: -ydiff
         },
         z: {
           distance: Math.abs(zdiff),
-          type: (zdiff > 0) ? 'forward' : 'backward',
-          direction: zdiff
+          type: (zdiff < 0) ? 'forward' : 'backward',
+          direction: -zdiff
         }
       };
 
@@ -40,6 +41,30 @@ angular.module('angularLeap')
       };
 
       return movement;
+    };
+
+    _swipeMovement = function (gesture) {
+      var swipeMovement,
+        movement = _movement(gesture);
+      angular.forEach(movement, function (data) {
+        if (data.distance) {
+          if (!swipeMovement) {
+            // init with first data
+            swipeMovement = data;
+          }
+          else {
+            // set maxvalue
+            swipeMovement = (swipeMovement.distance > data.distance) ? swipeMovement : data;
+          }
+        }
+      });
+      swipeMovement.movement = movement;
+
+      if (!movement.isSwipe[swipeMovement.type]) {
+        // mingestureIntense > intense
+        swipeMovement = undefined;
+      }
+      return swipeMovement;
     };
 
     _circleMovement = function (gesture) {
@@ -68,6 +93,9 @@ angular.module('angularLeap')
       // This wrapper functions just for API readability ( else you can't see the params without searching)
       timeout: function (ms) {
         return _timeoutFn(ms);
+      },
+      movement: function (gesture) {
+        return _movement(gesture);
       },
       swipeMovement: function (gesture) {
         return _swipeMovement(gesture);

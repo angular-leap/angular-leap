@@ -21,15 +21,65 @@ angular.module('angularLeap')
       if (!$window.Leap) {
         throw new Error('You should include LeapJS Native JavaScript API');
       }
+
+      var listeners;
+
+      var listener = function (gesture) {
+        var movement,
+          listenerKey = 'leap' + gesture.type;
+
+        if (gesture.type === 'circle') {
+          movement = leapFn.circleMovement(gesture);
+          // direction
+          listenerKey += movement.type?movement.type:'';
+        }
+        else if (gesture.type === 'swipe') {
+          movement = leapFn.swipeMovement(gesture);
+          // direction
+          listenerKey += movement.type?movement.type:'';
+        }
+        else if (gesture.type === 'screenTap') {
+          movement = gesture;
+        }
+        else if (gesture.type === 'keyTap') {
+          movement = gesture;
+        }
+
+
+        if (movement) {
+          angular.forEach(listeners[listenerKey.toLocaleLowerCase()], function (listenerFn) {
+            listenerFn(gesture,movement);
+          });
+        }
+      };
+
+      var _onGesture = function (eventName, fn) {
+        eventName = eventName.toLowerCase();
+        if (!listeners) {
+          listeners = {};
+          _controllerFn($window).on('gesture', listener);
+        }
+
+        if (listeners[eventName] instanceof Array) {
+          listeners[eventName].push(fn);
+        }
+        else {
+          listeners[eventName] = [fn];
+        }
+      };
+
+
       // Service API
       return {
         controller: function () {
           return _controllerFn($window);
         },
         fn: leapFn,
-        config: leapConfig
-
+        config: leapConfig,
+        onGesture: _onGesture,
+        _listeners: listeners
       };
     };
 
-  });
+  })
+;
