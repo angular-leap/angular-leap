@@ -1,6 +1,5 @@
 'use strict';
 angular.module('angularLeap', []);
-'use strict';
 angular.module('angularLeap').provider('leapConfig', function () {
   var _configFn, config = {
       defaultTimeout: 650,
@@ -16,7 +15,6 @@ angular.module('angularLeap').provider('leapConfig', function () {
     return _configFn;
   };
 });
-'use strict';
 angular.module('angularLeap').provider('leap', [
   'leapConfigProvider',
   function (leapConfigProvider) {
@@ -86,7 +84,6 @@ angular.module('angularLeap').provider('leap', [
   }
 ]);
 ;
-'use strict';
 angular.module('angularLeap').factory('leapFn', [
   '$timeout',
   'leapConfig',
@@ -171,7 +168,6 @@ angular.module('angularLeap').factory('leapFn', [
     };
   }
 ]);
-'use strict';
 angular.module('angularLeap').directive('leapBind', [
   '$interval',
   'leap',
@@ -221,7 +217,6 @@ angular.module('angularLeap').directive('leapBind', [
     };
   }
 ]);
-'use strict';
 angular.forEach([
   'leapKeyTap',
   'leapScreenTap',
