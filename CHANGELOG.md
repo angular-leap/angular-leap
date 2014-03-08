@@ -1,3 +1,11 @@
+<a name="v1.0.1"></a>
+### v1.0.1 (2014-03-08)
+
+
+#### Features
+
+* **leap-bind:** add leap-bind directive ([45cd1a4c](git@github.com:angular-leap/angular-leap/commit/45cd1a4c85f30cab309ac88ef7d66474c297a8a6))
+
 <a name="v1.0.0"></a>
 ## v1.0.0 (2014-02-18)
 
