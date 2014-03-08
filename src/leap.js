@@ -74,6 +74,9 @@ angular.module('angularLeap')
         controller: function () {
           return _controllerFn($window);
         },
+        getLastFrame: function () {
+          return _controllerFn($window).frame();
+        },
         fn: leapFn,
         config: leapConfig,
         onGesture: _onGesture,
