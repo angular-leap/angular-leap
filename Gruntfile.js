@@ -7,8 +7,11 @@ module.exports = function (grunt) {
    */
   require('load-grunt-tasks')(grunt);
 
-  grunt.initConfig({
+  var banner = '/** <%= pkg.name %> - v<%= pkg.version %> - ' +
+    '<%= grunt.template.today("yyyy-mm-dd") %> */\n';
 
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     buildConfig: {
       src: 'src/',
       dist: 'build',
@@ -47,6 +50,13 @@ module.exports = function (grunt) {
     },
 
     concat: {
+      options: {
+        banner: banner+'\'use strict\';\n',
+        process: function(src, filepath) {
+          return '// Source: ' + filepath + '\n' +
+            src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+        },
+      },
       dist: {
         src: ['<%= buildConfig.src %>/module.js', '<%= buildConfig.src %>/leapConfig.js', '<%= buildConfig.src %>/*.js', '<%= buildConfig.src %>/**/*.js'],
         dest: '<%= buildConfig.dist %>/<%= buildConfig.name %>.js'
@@ -62,6 +72,9 @@ module.exports = function (grunt) {
     },
 
     uglify: {
+      options: {
+        banner: banner
+      },
       dist: {
         files: {
           '<%= buildConfig.dist %>/<%= buildConfig.name %>.min.js': [
