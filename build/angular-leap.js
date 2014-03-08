@@ -37,40 +37,78 @@ angular.module('angularLeap').provider('leap', [
         if (!$window.Leap) {
           throw new Error('You should include LeapJS Native JavaScript API');
         }
+        var listeners;
+        var listener = function (gesture) {
+          var movement, listenerKey = 'leap' + gesture.type;
+          if (gesture.type === 'circle') {
+            movement = leapFn.circleMovement(gesture);
+            listenerKey += movement.type ? movement.type : '';
+          } else if (gesture.type === 'swipe') {
+            movement = leapFn.swipeMovement(gesture);
+            listenerKey += movement.type ? movement.type : '';
+          } else if (gesture.type === 'screenTap') {
+            movement = gesture;
+          } else if (gesture.type === 'keyTap') {
+            movement = gesture;
+          }
+          if (movement) {
+            angular.forEach(listeners[listenerKey.toLocaleLowerCase()], function (listenerFn) {
+              listenerFn(gesture, movement);
+            });
+          }
+        };
+        var _onGesture = function (eventName, fn) {
+          eventName = eventName.toLowerCase();
+          if (!listeners) {
+            listeners = {};
+            _controllerFn($window).on('gesture', listener);
+          }
+          if (listeners[eventName] instanceof Array) {
+            listeners[eventName].push(fn);
+          } else {
+            listeners[eventName] = [fn];
+          }
+        };
         return {
           controller: function () {
             return _controllerFn($window);
           },
+          getLastFrame: function () {
+            return _controllerFn($window).frame();
+          },
           fn: leapFn,
-          config: leapConfig
+          config: leapConfig,
+          onGesture: _onGesture,
+          _listeners: listeners
         };
       }
     ];
   }
 ]);
+;
 'use strict';
 angular.module('angularLeap').factory('leapFn', [
   '$timeout',
   'leapConfig',
   function ($timeout, leapConfig) {
-    var _timeoutFn, _swipeMovement, _circleMovement, timeoutActive = false;
-    _swipeMovement = function (gesture) {
+    var _timeoutFn, _movement, _circleMovement, _swipeMovement, timeoutActive = false;
+    _movement = function (gesture) {
       var xdiff = gesture.startPosition[0] - gesture.position[0], ydiff = gesture.startPosition[1] - gesture.position[1], zdiff = gesture.startPosition[2] - gesture.position[2];
       var movement = {
           x: {
             distance: Math.abs(xdiff),
             type: xdiff > 0 ? 'left' : 'right',
-            direction: xdiff
+            direction: -xdiff
           },
           y: {
             distance: Math.abs(ydiff),
             type: ydiff > 0 ? 'down' : 'up',
-            direction: ydiff
+            direction: -ydiff
           },
           z: {
             distance: Math.abs(zdiff),
-            type: zdiff > 0 ? 'forward' : 'backward',
-            direction: zdiff
+            type: zdiff < 0 ? 'forward' : 'backward',
+            direction: -zdiff
           }
         };
       movement.isSwipe = {
@@ -82,6 +120,23 @@ angular.module('angularLeap').factory('leapFn', [
         backward: zdiff > 0 && movement.z.distance > leapConfig().gestureIntense
       };
       return movement;
+    };
+    _swipeMovement = function (gesture) {
+      var swipeMovement, movement = _movement(gesture);
+      angular.forEach(movement, function (data) {
+        if (data.distance) {
+          if (!swipeMovement) {
+            swipeMovement = data;
+          } else {
+            swipeMovement = swipeMovement.distance > data.distance ? swipeMovement : data;
+          }
+        }
+      });
+      swipeMovement.movement = movement;
+      if (!movement.isSwipe[swipeMovement.type]) {
+        swipeMovement = undefined;
+      }
+      return swipeMovement;
     };
     _circleMovement = function (gesture) {
       var movement = {
@@ -104,11 +159,64 @@ angular.module('angularLeap').factory('leapFn', [
       timeout: function (ms) {
         return _timeoutFn(ms);
       },
+      movement: function (gesture) {
+        return _movement(gesture);
+      },
       swipeMovement: function (gesture) {
         return _swipeMovement(gesture);
       },
       circleMovement: function (gesture) {
         return _circleMovement(gesture);
+      }
+    };
+  }
+]);
+'use strict';
+angular.module('angularLeap').directive('leapBind', [
+  '$interval',
+  'leap',
+  function ($interval, leap) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        var updateRate = 50;
+        if (angular.isDefined(attr.leapBindUpdateRate)) {
+          updateRate = attr.leapBindUpdateRate;
+        }
+        function getObjValueByArrayPath(object, pathArray) {
+          var nextStep = pathArray.shift();
+          if (!angular.isObject(object)) {
+            return object;
+          }
+          if (!pathArray.length) {
+            return object[nextStep];
+          }
+          return getObjValueByArrayPath(object[nextStep], pathArray);
+        }
+        function getPathArrayFromString(pathAsString) {
+          var pathAsArray = [];
+          function removeEmptyFilter(element) {
+            return element.length > 0;
+          }
+          pathAsString.split(/(\w*)\.?\[([\w\d]*)\]/).filter(removeEmptyFilter).map(function (e) {
+            return e.split('.').filter(removeEmptyFilter);
+          }).forEach(function (element) {
+            while (element.length) {
+              pathAsArray.push(element.shift());
+            }
+          });
+          return pathAsArray;
+        }
+        function update() {
+          var configObj = scope.$eval(attr.leapBind);
+          if (angular.isObject(configObj)) {
+            angular.forEach(configObj, function (v, k) {
+              scope[k] = getObjValueByArrayPath(leap.getLastFrame(), getPathArrayFromString(v));
+            });
+          }
+        }
+        update();
+        $interval(update, updateRate);
       }
     };
   }
@@ -127,14 +235,12 @@ angular.forEach([
   'leapSwipeForward',
   'leapSwipeBackward'
 ], function (directiveName) {
-  var splitByCamelCase = directiveName.replace(/([A-Z])/g, ' $1').split(' '), eventType = splitByCamelCase[1].toLowerCase(), direction = splitByCamelCase[2];
-  if (splitByCamelCase[2] === 'Tap') {
+  var splitByCamelCase = directiveName.replace(/([A-Z])/g, ' $1').split(' '), eventType = splitByCamelCase[1].toLowerCase();
+  if (splitByCamelCase[2]) {
     eventType += splitByCamelCase[2];
-  } else if (splitByCamelCase[2] === 'Circle') {
-    eventType += splitByCamelCase[2];
-    if (splitByCamelCase[3]) {
-      eventType += splitByCamelCase[3];
-    }
+  }
+  if (splitByCamelCase[3]) {
+    eventType += splitByCamelCase[3];
   }
   angular.module('angularLeap').directive(directiveName, [
     '$parse',
@@ -143,24 +249,12 @@ angular.forEach([
       return function (scope, element, attr) {
         var fn = $parse(attr[directiveName]);
         var timeout = attr.leapTimeout ? attr.leapTimeout : leap.config().defaultTimeout;
-        var listener = function (gesture) {
-          if (gesture.type === eventType) {
-            if (eventType === 'swipe' && !leap.fn.swipeMovement(gesture).isSwipe[direction.toLowerCase()]) {
-              return;
-            }
-            if (splitByCamelCase[2] === 'Circle' && direction && leap.fn.circleMovement(gesture).type !== direction.toLowerCase()) {
-              return;
-            }
-            if (!leap.fn.timeout(timeout)) {
-              scope.$apply(function () {
-                fn(scope, { $gesture: gesture });
-              });
-            }
+        leap.onGesture(directiveName, function (gesture) {
+          if (!leap.fn.timeout(timeout)) {
+            scope.$apply(function () {
+              fn(scope, { $gesture: gesture });
+            });
           }
-        };
-        leap.controller().on('gesture', listener);
-        scope.$on('$destroy', function () {
-          leap.controller().removeListener('gesture', listener);
         });
       };
     }
